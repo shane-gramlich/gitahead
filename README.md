@@ -1,3 +1,6 @@
+[![Actions Status](https://github.com/shane-gramlich/gitahead/workflows/xx/badge.svg)](https://github.com/shane-gramlich/gitahead/actions)
+
+
 GitAhead - Understand Your History
 ==================================
 
