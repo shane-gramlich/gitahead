@@ -44,5 +44,4 @@ jobs:
     - name: Test
       run: |
         cd build/release
-        echo "TODO: Disable ui tests in headless environment or find a way to send tests to an external browser, ninja check"
-        #ninja check
+        ninja check
