@@ -30,8 +30,17 @@ jobs:
     - uses: actions/checkout@v1
     - name: Initialize Submodules
       uses: snickerbockers/submodules-init@v4
+    - name: Install Perl
+      if: matrix.env.name == 'windows'
+    - uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.30'
     - name: Build OpensSSL
-      if: matrix.env.name != 'windows'
+      if: matrix.env.name == 'windows'
+      run: |
+        perl Configure VC-WIN64A
+        nmake
+      else:
       run: |
         cd dep/openssl/openssl
         ./Configure ${{ matrix.env.arch }} no-shared
