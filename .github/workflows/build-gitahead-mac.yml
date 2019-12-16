@@ -36,15 +36,15 @@ jobs:
       with:
         perl-version: '5.30'
     - name: Build OpensSSL
-      if: matrix.env.name == 'windows'
-      run: |
+      -run: |
         perl Configure VC-WIN64A
         nmake
-      - if: matrix.env.name != 'windows'
-        run: |
+       if: matrix.env.name == 'windows'
+      -run: |
         cd dep/openssl/openssl
         ./Configure ${{ matrix.env.arch }} no-shared
         make
+       if: matrix.env.name != 'windows'
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v1
       with:
