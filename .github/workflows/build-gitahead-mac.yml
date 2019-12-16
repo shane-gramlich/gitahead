@@ -1,8 +1,31 @@
-name: Build GitAhead (Mac)
+name: GitAhead (CI)
 on: [push]
 jobs:
   build:
-    runs-on: macOS-latest
+    fail-fast: true
+    runs-on: ${{ matrix.env.os }}
+    strategy:
+      matrix:
+        env:
+          - name: mac
+            os: macos-latest
+            ninja_platform: mac
+            qt_platform: mac
+            arch: darwin64-x86_64-cc
+          - name: linux
+            os: ubuntu-latest
+            ninja_platform: linux
+            qt_platform: linux
+            arch: linux-x86_64
+          - name: windows
+            os: windows-latest
+            ninja_platform: win
+            qt_platform: windows
+            arch: VC-WIN64A
+            cmake_flags: "-DUSE_SYSTEM_OPENSSL=1"
+            cmake_env:
+              CC: cl
+              CXX: cl
     steps:
     - uses: actions/checkout@v1
     - name: Initialize Submodules
@@ -42,6 +65,7 @@ jobs:
         cd build/release
         ninja
     - name: Test
+      if: false
       run: |
         cd build/release
         ninja check
