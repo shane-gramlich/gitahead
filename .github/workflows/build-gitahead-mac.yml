@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ${{ matrix.env.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         env:
           - name: mac
@@ -31,15 +31,16 @@ jobs:
     - name: Initialize Submodules
       uses: snickerbockers/submodules-init@v4
     - name: Build OpensSSL
+      if: matrix.env.name != 'windows'
       run: |
         cd dep/openssl/openssl
-        ./Configure darwin64-x86_64-cc no-shared
+        ./Configure ${{ matrix.env.arch }} no-shared
         make
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v1
       with:
         version: 1.9.0
-        platform: mac # [win, mac, linux]
+        platform: ${{ matrix.env.ninja_platform }}
         destination: ninja
     - name: Install Qt
       uses: jurplel/install-qt-action@v2.2.0
