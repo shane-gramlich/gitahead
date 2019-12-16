@@ -32,7 +32,7 @@ jobs:
       uses: snickerbockers/submodules-init@v4
     - name: Install Perl
       if: matrix.env.name == 'windows'
-    - uses: shogo82148/actions-setup-perl@v1
+      uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: '5.30'
     - name: Build OpensSSL
