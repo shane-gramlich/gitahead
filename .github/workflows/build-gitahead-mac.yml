@@ -39,7 +39,7 @@ jobs:
       if: matrix.env.name == 'windows'
       uses: ilammy/setup-nasm@v1.0.0
         with:
-        platform: win64
+          platform: win64
     - name: Build OpensSSL (Win)
       if: matrix.env.name == 'windows'
       run: |
