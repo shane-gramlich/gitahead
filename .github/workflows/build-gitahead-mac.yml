@@ -40,8 +40,8 @@ jobs:
       run: |
         perl Configure VC-WIN64A
         nmake
-      else:
-      run: |
+      - if: matrix.env.name != 'windows'
+        run: |
         cd dep/openssl/openssl
         ./Configure ${{ matrix.env.arch }} no-shared
         make
