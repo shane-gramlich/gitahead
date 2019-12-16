@@ -35,9 +35,9 @@ jobs:
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: '5.30'
-    - name: Install NASM (nmake)
+    - name: Install Nmake
       if: matrix.env.name == 'windows'
-      uses: ilammy/setup-nasm@v1.0.0
+      uses: seanmiddleditch/gha-setup-vsdevenv@v1
     - name: Build OpensSSL (Win)
       if: matrix.env.name == 'windows'
       run: |
