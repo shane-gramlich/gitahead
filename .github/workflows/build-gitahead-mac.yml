@@ -74,6 +74,7 @@ jobs:
         install-deps: true
         modules: qtwebengine
     - name: Configure Release
+      env: ${{ matrix.env.cmake_env }}
       run: |
         mkdir -p build/release
         cd build/release
