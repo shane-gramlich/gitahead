@@ -7,17 +7,17 @@ jobs:
       fail-fast: false
       matrix:
         env:
+          - name: lin
+            os: ubuntu-latest
+            ninja_platform: linux
+            qt_platform: linux
+            arch: linux-x86_64
           - name: mac
             os: macos-latest
             ninja_platform: mac
             qt_platform: mac
             arch: darwin64-x86_64-cc
-          - name: linux
-            os: ubuntu-latest
-            ninja_platform: linux
-            qt_platform: linux
-            arch: linux-x86_64
-          - name: windows
+          - name: win
             os: windows-latest
             ninja_platform: win
             qt_platform: windows
@@ -31,25 +31,34 @@ jobs:
     - name: Initialize Submodules
       uses: snickerbockers/submodules-init@v4
     - name: Install Perl
-      if: matrix.env.name == 'windows'
+      if: matrix.env.name == 'win'
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: '5.30'
     - name: Install Nmake
-      if: matrix.env.name == 'windows'
+      if: matrix.env.name == 'win'
       uses: seanmiddleditch/gha-setup-vsdevenv@v1
-    - name: Build OpensSSL (Win)
-      if: matrix.env.name == 'windows'
+    - name: Install NASM
+      if: matrix.env.name == 'win'
+      uses: ilammy/setup-nasm@v1.0.0
+    - name: Build OpenSSL (linux)
+      if: matrix.env.name == 'lin'
       run: |
         cd dep/openssl/openssl
-        perl Configure VC-WIN64A
-        nmake
-    - name: Build OpenSSL (Unix)
-      if: matrix.env.name != 'windows'
+        ./config -fPIC
+        make
+    - name: Build OpenSSL (mac)
+      if: matrix.env.name == 'mac'
       run: |
         cd dep/openssl/openssl
         ./Configure ${{ matrix.env.arch }} no-shared
         make
+    - name: Build OpensSSL (win)
+      if: matrix.env.name == 'win'
+      run: |
+        cd dep/openssl/openssl
+        perl Configure VC-WIN64A
+        nmake
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v1
       with:
