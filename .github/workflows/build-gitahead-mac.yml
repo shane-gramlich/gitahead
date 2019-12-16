@@ -35,6 +35,11 @@ jobs:
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: '5.30'
+    - name: Install NASM (nmake)
+      if: matrix.env.name == 'windows'
+      uses: ilammy/setup-nasm@v1.0.0
+        with:
+        platform: win64
     - name: Build OpensSSL (Win)
       if: matrix.env.name == 'windows'
       run: |
@@ -47,7 +52,6 @@ jobs:
         cd dep/openssl/openssl
         ./Configure ${{ matrix.env.arch }} no-shared
         make
-    - run: perl -V
     - name: Install Ninja
       uses: seanmiddleditch/gha-setup-ninja@v1
       with:
