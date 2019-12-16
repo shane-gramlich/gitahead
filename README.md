@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/shane-gramlich/gitahead/workflows/GitAhead+%28CI%29/badge.svg)](https://github.com/shane-gramlich/gitahead/actions)
+[![Actions Status](https://github.com/shane-gramlich/gitahead/workflows/GitAhead%20%28CI%29/badge.svg)](https://github.com/shane-gramlich/gitahead/actions)
 
 
 GitAhead - Understand Your History
