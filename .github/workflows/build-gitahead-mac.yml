@@ -6,7 +6,7 @@ name: GitAhead
 on:
   push:
     branches-ignore:
-      - master
+      - stage
   pull_request:
   page_build:
 jobs:
