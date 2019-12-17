@@ -1,10 +1,12 @@
-GitAhead - Understand Your History [![Actions Status](https://github.com/shane-gramlich/gitahead/workflows/GitAhead%20%28CI%29/badge.svg)](https://github.com/shane-gramlich/gitahead/actions) [![Actions Status](https://github.com/shane-gramlich/gitahead/workflows/GitAhead%20%28CI%29/badge.svg)](https://github.com/shane-gramlich/gitahead/actions)
+GitAhead - Understand Your History
 ==================================
 
 GitAhead is a graphical Git client designed to help you understand
 and manage your source code history. It's available as a pre-built
 binary for Windows, Linux, and macOS, or can be built from source by
 following the directions below.
+
+[![Actions Status](https://github.com/shane-gramlich/gitahead/workflows/GitAhead%20%28CI%29/badge.svg)](https://github.com/shane-gramlich/gitahead/actions) [![Actions Status](https://github.com/shane-gramlich/gitahead/workflows/GitAhead%20%28CI%29/badge.svg)](https://github.com/shane-gramlich/gitahead/actions)
 
 How to Get Help
 ---------------
