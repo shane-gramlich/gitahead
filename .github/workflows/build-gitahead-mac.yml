@@ -9,6 +9,9 @@ on:
       - stage
   pull_request:
   page_build:
+env:
+  QT_DEBUG_PLUGINS: 1
+  CI: true
 jobs:
   build:
     runs-on: ${{ matrix.env.os }}
@@ -98,6 +101,8 @@ jobs:
           cmake --version
           echo $PATH
           echo $QT_PLUGIN_PATH
+          echo $CI
+          echo $QT_DEBUG_PLUGINS
       - name: Build
         run: |
           cd build/release
