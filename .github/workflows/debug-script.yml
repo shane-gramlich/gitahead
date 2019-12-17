@@ -1,10 +1,9 @@
-# Debug Script
-# 
-# For testing and development purposes
 ---
 name: Debug
 on:
   push:
+    branches-ignore:
+      - stage
   pull_request:
   page_build:
 env:
@@ -36,19 +35,77 @@ jobs:
             cmake_env:
               CC: cl
               CXX: cl
-  steps:
-    - uses: actions/checkout@v1
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v2.2.0
-      timeout-minutes: 10
-      with:
-        version: 5.12.5
-        target: desktop
-        host: ${{ matrix.env.qtplatform }}
-        install-deps: true
-        modules: qtwebengine qtnetworkauth qtwebglplugin qtscript debug_info
-    - name: Print
-      run: |
-        pwd
-        ls -la
+    steps:
+      - uses: actions/checkout@v1
+      - name: Initialize Submodules
+        uses: snickerbockers/submodules-init@v4
+      - name: Install Perl
+        if: matrix.env.name == 'win'
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.30'
+      - name: Install Nmake
+        if: matrix.env.name == 'win'
+        uses: seanmiddleditch/gha-setup-vsdevenv@v1
+      - name: Install NASM
+        if: matrix.env.name == 'win'
+        uses: ilammy/setup-nasm@v1.0.0
+      - name: Build OpenSSL (linux)
+        if: matrix.env.name == 'linux'
+        run: |
+          cd dep/openssl/openssl
+          ./config -fPIC
+          make
+      - name: Build OpenSSL (mac)
+        if: matrix.env.name == 'mac'
+        run: |
+          cd dep/openssl/openssl
+          ./Configure ${{ matrix.env.arch }} no-shared
+          make
+      - name: Build OpensSSL (win)
+        if: matrix.env.name == 'win'
+        run: |
+          cd dep/openssl/openssl
+          perl Configure VC-WIN64A
+          nmake
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@v1
+        with:
+          version: 1.9.0
+          platform: ${{ matrix.env.ninja_platform }}
+          destination: ninja
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.2.0
+        timeout-minutes: 10
+        with:
+          version: 5.12.5
+          target: desktop
+          host: ${{ matrix.env.qtplatform }}
+          install-deps: true
+          modules: qtwebengine qtnetworkauth qtwebglplugin qtscript debug_info
+      - name: Configure Release
+        env: ${{ matrix.env.cmake_env }}
+        run: |
+          mkdir -p build/release
+          cd build/release
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ../..
+      - name: Build Information
+        run: |
+          echo "ninja version: $(ninja --version)"
+          git --version
+          qmake --version
+          cmake --version
+          echo $PATH
+          echo $QT_PLUGIN_PATH
+          echo $CI
+          echo $
+      - name: Build
+        run: |
+          cd build/release
+          ninja
+      - name: Test
+        continue-on-error: true
+        run: |
+          cd build/release
+          ninja check
 ...
