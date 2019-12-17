@@ -1,9 +1,12 @@
+# Developement CI Script
+# 
+# Description
 ---
 name: GitAhead
 on:
   push:
     branches-ignore:
-      - stage
+      - master
   pull_request:
   page_build:
 jobs:
