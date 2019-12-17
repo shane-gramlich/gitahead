@@ -2,7 +2,8 @@
 name: GitAhead
 on:
   push:
-    - master
+    branches:
+      - master
 jobs:
   build:
     runs-on: ${{ matrix.env.os }}
