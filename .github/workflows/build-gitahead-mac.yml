@@ -2,10 +2,10 @@
 name: GitAhead
 on:
   push:
-    branches:
     branches-ignore:
-      - master
-    pull_request:
+      - stage
+  pull_request:
+  page_build:
 jobs:
   build:
     runs-on: ${{ matrix.env.os }}
