@@ -6,7 +6,7 @@ on:
   page_build:
 env:
   QT_DEBUG_PLUGINS: 1
-  CMAKE_PREFIX_PATH: $HOME/Qt/5.12.5/clang_64
+  CMAKE_PREFIX_PATH: $GITHUB_WORKSPACE/Qt/5.12.5/clang_64
 jobs:
   build:
     runs-on: macos
@@ -16,6 +16,7 @@ jobs:
         uses: jurplel/install-qt-action@v2.2.0
         timeout-minutes: 10
         with:
+          dir: $GITHUB_WORKSPACE/
           version: 5.12.5
           target: desktop
           host: ${{ matrix.env.qtplatform }}
@@ -25,6 +26,7 @@ jobs:
         run: |
           echo CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH
           echo HOME: $HOME
+          echo GITHUB_WORKSPACE: $GITHUB_WORKSPACE
           echo "ninja version: $(ninja --version)"
           git --version
           qmake --version
@@ -39,6 +41,6 @@ jobs:
           cd ../
           pwd
           ls -la
-          cd $HOME/Qt/5.12.5/clang_64
+          cd $GITHUB_WORKSPACE/Qt/5.12.5/clang_64
           ls -la
 ...
