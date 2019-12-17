@@ -96,6 +96,8 @@ jobs:
           git --version
           qmake --version
           cmake --version
+          echo $PATH
+          echo $QT_PLUGIN_PATH
       - name: Build
         run: |
           cd build/release
