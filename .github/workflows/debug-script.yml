@@ -8,31 +8,7 @@ env:
   QT_DEBUG_PLUGINS: 1
 jobs:
   build:
-    runs-on: ${{ matrix.env.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        env:
-          - name: linux
-            os: ubuntu-latest
-            ninja_platform: linux
-            qt_platform: linux
-            arch: linux-x86_64
-            cmake_env: {}
-          - name: mac
-            os: macos-latest
-            ninja_platform: mac
-            qt_platform: mac
-            arch: darwin64-x86_64-cc
-            cmake_env: {}
-          - name: win
-            os: windows-latest
-            ninja_platform: win
-            qt_platform: windows
-            arch: VC-WIN64A
-            cmake_env:
-              CC: cl
-              CXX: cl
+    runs-on: macos
     steps:
       - uses: actions/checkout@v1
       - name: Install Qt
@@ -46,6 +22,9 @@ jobs:
           modules: qtwebengine qtnetworkauth qtwebglplugin qtscript debug_info
       - name: Print
         run: |
+          pwd
+          ls -la
+          cd ../
           pwd
           ls -la
 ...
