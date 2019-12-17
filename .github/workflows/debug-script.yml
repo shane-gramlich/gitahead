@@ -23,6 +23,13 @@ jobs:
       - name: Variables
         run: |
           echo CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH
+          echo "ninja version: $(ninja --version)"
+          git --version
+          qmake --version
+          cmake --version
+          echo $PATH
+          echo $QT_PLUGIN_PATH
+          echo $QT_DEBUG_PLUGINS
       - name: Print
         run: |
           pwd
