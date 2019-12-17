@@ -6,6 +6,7 @@ on:
   page_build:
 env:
   QT_DEBUG_PLUGINS: 1
+  CMAKE_PREFIX_PATH: $HOME/Qt/5.12.5/clang_64
 jobs:
   build:
     runs-on: macos
@@ -23,6 +24,7 @@ jobs:
       - name: Variables
         run: |
           echo CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH
+          echo HOME: $HOME
           echo "ninja version: $(ninja --version)"
           git --version
           qmake --version
@@ -36,5 +38,7 @@ jobs:
           ls -la
           cd ../
           pwd
+          ls -la
+          cd $HOME/Qt/5.12.5/clang_64
           ls -la
 ...
