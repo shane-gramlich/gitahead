@@ -1,6 +1,8 @@
 ---
-name: GitAhead (CI)
-on: [push]
+name: GitAhead
+on:
+  push:
+    - master
 jobs:
   build:
     runs-on: ${{ matrix.env.os }}
