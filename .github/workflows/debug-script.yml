@@ -2,53 +2,53 @@
 # 
 # For testing and development purposes
 ---
-  name: Debug
-  on:
-    push:
-    pull_request:
-    page_build:
-  env:
-    QT_DEBUG_PLUGINS: 1
-    jobs:
-      build:
-        runs-on: ${{ matrix.env.os }}
-        strategy:
-          fail-fast: false
-          matrix:
-            env:
-              - name: linux
-                os: ubuntu-latest
-                ninja_platform: linux
-                qt_platform: linux
-                arch: linux-x86_64
-                cmake_env: {}
-              - name: mac
-                os: macos-latest
-                ninja_platform: mac
-                qt_platform: mac
-                arch: darwin64-x86_64-cc
-                cmake_env: {}
-              - name: win
-                os: windows-latest
-                ninja_platform: win
-                qt_platform: windows
-                arch: VC-WIN64A
-                cmake_env:
-                  CC: cl
-                  CXX: cl
-      steps:
-        - uses: actions/checkout@v1
-        - name: Install Qt
-          uses: jurplel/install-qt-action@v2.2.0
-          timeout-minutes: 10
-          with:
-            version: 5.12.5
-            target: desktop
-            host: ${{ matrix.env.qtplatform }}
-            install-deps: true
-            modules: qtwebengine qtnetworkauth qtwebglplugin qtscript debug_info
-        - name: Print
-          run: |
-            pwd
-            ls -la
+name: Debug
+on:
+  push:
+  pull_request:
+  page_build:
+env:
+  QT_DEBUG_PLUGINS: 1
+jobs:
+  build:
+    runs-on: ${{ matrix.env.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - name: linux
+            os: ubuntu-latest
+            ninja_platform: linux
+            qt_platform: linux
+            arch: linux-x86_64
+            cmake_env: {}
+          - name: mac
+            os: macos-latest
+            ninja_platform: mac
+            qt_platform: mac
+            arch: darwin64-x86_64-cc
+            cmake_env: {}
+          - name: win
+            os: windows-latest
+            ninja_platform: win
+            qt_platform: windows
+            arch: VC-WIN64A
+            cmake_env:
+              CC: cl
+              CXX: cl
+  steps:
+    - uses: actions/checkout@v1
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2.2.0
+      timeout-minutes: 10
+      with:
+        version: 5.12.5
+        target: desktop
+        host: ${{ matrix.env.qtplatform }}
+        install-deps: true
+        modules: qtwebengine qtnetworkauth qtwebglplugin qtscript debug_info
+    - name: Print
+      run: |
+        pwd
+        ls -la
 ...
