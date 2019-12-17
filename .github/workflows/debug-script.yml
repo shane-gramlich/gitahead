@@ -22,7 +22,7 @@ jobs:
           modules: qtwebengine qtnetworkauth qtwebglplugin qtscript debug_info
       - name: Variables
         run: |
-        echo CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH
+          echo CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH
       - name: Print
         run: |
           pwd
